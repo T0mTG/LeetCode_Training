@@ -1,30 +1,18 @@
 #include<bits/stdc++.h>
 using namespace std;
-long long uppe(vector<int>& nums,long long l, long long target){
+long long proc(vector<int>& nums,long long l, long long target){
     long long n=nums.size();
     long long r=n-1,res=0;
+    //see problem #2824 if ur stuck
     while(l<r)
     {
         //cout<<l<<": "<<nums[l]<<" || "<<r<<": "<<nums[r]<<endl;
-        if(nums[l]+ nums[r]<=target){ 
+        if(nums[l]+ nums[r]<target){ 
             //if the sum between the two ends is smaller than the target, than for every number between l and r
             //combines with nums[l] will also be smaller target, this is true because we sorted the array
             res+=r-l;
             //increase l to check the next number
             l++; 
-        }
-        else r--;
-    }
-    return res;
-}
-long long lowe(vector<int>& nums,long long l, long long target){
-    long long n=nums.size();
-    long long r=n-1,res=0;
-    while(l<r)
-    {
-        if(nums[l]+ nums[r]<target){ 
-            res+=r-l;
-            l++;
         }
         else r--;
     }
@@ -37,23 +25,23 @@ long long countFairPairs(vector<int>& nums, int lower, int upper) {
     // for(auto i:nums) cout<<i<<" ";
     // cout<<endl;
 
-    //uppe is basically a two-pointer function that finds the nums of pairs that are <= upper,
-    //including pairs with sum < lower
+    // proc is basically a two-pointer function that finds the number of pairs that have the sum < target
     
-    //lowe is the same as uppe, but it finds the nums of pairs that are smaller than lower,
-    //therefore, we can eliminate the pairs with sums < lower
-
-    // hence res=uppe - lowe;
-    long long res=uppe(nums,0,upper)-lowe(nums,0,lower);
+    // so we find the number of pairs <= upper (or < upper+1), including pairs that have sum smaller than lower
+    
+    // then, we find the amount of pairs < lower to eliminate
+    // hence res= proc(...,upper+1) - proc(...,lower+1)
+    
+    long long res=proc(nums,0,upper+1)-proc(nums,0,lower);
 
     //visualization
-    //                                        lower           upper
-    //Sums of pairs:             ///////////////////////////////////////
-    //Number of pairs from uppe: ///////////////////////////////|
-    //Number of pairs from lowe: ///////////////|
-    //Res:                                      |///////////////|
+    //                                                  lower           upper
+    //Sums of pairs:                           ///////////////////////////////////////
+    //Number of pairs from proc(..., upper+1): ////////////////////////////////|
+    //Number of pairs from proc(..., lower+1): ///////////////|
+    //Res:                                               |////////////////|
     
-    cout<<uppe(nums,0,upper)<<" || "<<lowe(nums,0,lower)<<endl;
+    //cout<<proc(nums,0,upper+1)<<" || "<<proc(nums,0,lower)<<endl;
     cout<<res;
     return res;
 }
