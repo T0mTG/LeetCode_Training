@@ -38,7 +38,7 @@ int longestOnes(vector<int>& nums, int k) {
         }
         if(count<=k){
             //cout<<l<<" "<<r<<":"<<tmp<<endl;
-            //if the range is legit, compare it and put it to res;
+            //if the range is legit, compare it and put it to res;  
             res=max(res,tmp+count);
         }
     }   
