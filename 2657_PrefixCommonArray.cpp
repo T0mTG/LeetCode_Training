@@ -6,6 +6,12 @@ vector<int> findThePrefixCommonArray(vector<int>& A, vector<int>& B) {
     int check[100];
     memset(check,0,sizeof(check));
     int tmp=0;
+
+    //according to the problem description, each number from 1 to n only occurs one
+
+    //so the idea is to have the numbers of occurrence saved in check, and when it
+    //reached two (or appeared in both array at ith index), the number is presented in 
+    //both A and B -> increase the count (or tmp)
     for(int i=0;i<A.size();i++){
         check[A[i]]++;
         if(check[A[i]]==2) tmp++;
